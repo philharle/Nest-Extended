@@ -266,7 +266,7 @@ class Nest {
                 'alt_heat' => $this->last_status->shared->{$serial_number}->hvac_alt_heat_state,
                 'fan' => $this->last_status->shared->{$serial_number}->hvac_fan_state,
                 'auto_away' => $this->last_status->shared->{$serial_number}->auto_away, // -1 when disabled, 0 when enabled (thermostat can set auto-away), >0 when enabled and active (thermostat is currently in auto-away mode)
-                'manual_away' => $manual_away,
+		'manual_away' => $manual_away,
                 'leaf' => $this->last_status->device->{$serial_number}->leaf,
                 'battery_level' => $this->last_status->device->{$serial_number}->battery_level,
             ),
@@ -345,6 +345,10 @@ class Nest {
         $temp_high = $this->temperatureInCelsius($temp_high, $serial_number);
         $data = json_encode(array('target_change_pending' => TRUE, 'target_temperature_low' => $temp_low, 'target_temperature_high' => $temp_high));
         return $this->doPOST("/v2/put/shared." . $serial_number, $data);
+    }
+
+    public function setEcoTemperatures($temp_low, $temp_high, $serial_number=null) {
+	return $this->setAwayTemperatures($temp_low, $temp_high, $serial_number);
     }
 
     public function setAwayTemperatures($temp_low, $temp_high, $serial_number=null) {
