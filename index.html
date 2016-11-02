@@ -202,6 +202,7 @@
 				}
 				$("#heating").text(heating/3600);
 				$("#cooling").text(cooling/3600);
+				$("#heatingrounded").text((heating/3600).toFixed(2));
 				$("#days").text((o.end - o.start)/86400000);
 			}
 
@@ -284,7 +285,7 @@
 <div id="miscellany" style="float:right;width:500px;height:250px;"></div>
 <div style="width:1000px;height:10px;">&nbsp;</div>
 <div style="width:1000px">ENERGY:</div>
-<div align="center"><h4>The heating has been active for <span id="heating"></span> hours over the selected period</h4>
+<div align="center"><h4>The heating has been active for <span id="heatingrounded"></span> hours over the selected period</h4>
 <div id="energynav" style="width:1000px;height:100px;"></div>
 <div id="energy" style="width:1000px;height:500px;"></div>
 </span>
