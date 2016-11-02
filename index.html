@@ -186,7 +186,8 @@
 		var d = new Date();
 		var currenttime = d.getTime();
 		var lastmonth = currenttime - 30*86400000;
-		var initSpan = {start: lastmonth, end: currenttime};
+		var yesterday = currenttime - 86400000;
+		var initSpan = {start: lastmonth, end: yesterday};
 
 		$.getJSON('resources/utils/nest-get-json.php?datatype=daily', function(fulldata) {
 			function summary(o) {
@@ -252,6 +253,8 @@
 					mode: "time",
 					timeformat: "%m/%d/%Y",
 					timezone: "browser",
+                                        max: yesterday,
+
 				}],
 				yaxes: [{
 					show: false
