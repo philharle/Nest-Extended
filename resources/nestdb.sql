@@ -69,6 +69,7 @@ CREATE TABLE IF NOT EXISTS `nest` (
   `fan_on` tinyint(1) NOT NULL,
   `battery_level` decimal(4,3) NOT NULL,
   `is_online` tinyint(1) NOT NULL,
+  `hotwater_on` tinyint(1) NOT NULL,
   UNIQUE KEY `log_datetime` (`log_datetime`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
