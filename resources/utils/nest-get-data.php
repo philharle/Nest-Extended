@@ -36,6 +36,9 @@ if ($datatype === 'current'){
 	//Used to return current inside temperature, current inside humidity, current mode, target temperature, time to target temperature, current heat state, current ac state
 	$infos = $nest->getDeviceInfo();
 
+	//DEBUG
+	//echo json_encode($infos);
+
 	//If the target temperature is an array, we need to deal with that.
 	if (strpos($infos->current_state->mode,'heat') !== false) {
 		if (is_array($infos->target->temperature)) {
@@ -59,7 +62,7 @@ if ($datatype === 'current'){
 	}
 	
 	//Insert Current Values into Nest Database Table
-	$sql = 'INSERT INTO nest (log_datetime, location, outside_temp, outside_humidity, away_status, leaf_status, current_temp, current_humidity, temp_mode, low_target_temp, high_target_temp, time_to_target, target_humidity, heat_on, humidifier_on, ac_on, fan_on, battery_level, is_online) VALUES (NOW(), "'.$postal_code.'", "'.$locations[0]->outside_temperature.'", "'.$locations[0]->outside_humidity.'", "'.$locations[0]->away.'", "'.$infos->current_state->leaf.'", "'.$infos->current_state->temperature.'", "'.$infos->current_state->humidity.'", "'.$infos->current_state->mode.'", "'.$low_target_temp.'", "'.$high_target_temp.'", "'.$infos->target->time_to_target.'","0","'.$infos->current_state->heat.'","0","'.$infos->current_state->ac.'","'.$infos->current_state->fan.'","'.$infos->current_state->battery_level.'","'.$infos->network->online.'")';
+	$sql = 'INSERT INTO nest (log_datetime, location, outside_temp, outside_humidity, away_status, leaf_status, current_temp, current_humidity, temp_mode, low_target_temp, high_target_temp, time_to_target, target_humidity, heat_on, humidifier_on, ac_on, fan_on, battery_level, is_online, hotwater_on) VALUES (NOW(), "'.$postal_code.'", "'.$locations[0]->outside_temperature.'", "'.$locations[0]->outside_humidity.'", "'.$locations[0]->away.'", "'.$infos->current_state->leaf.'", "'.$infos->current_state->temperature.'", "'.$infos->current_state->humidity.'", "'.$infos->current_state->mode.'", "'.$low_target_temp.'", "'.$high_target_temp.'", "'.$infos->target->time_to_target.'","0","'.$infos->current_state->heat.'","0","'.$infos->current_state->ac.'","'.$infos->current_state->fan.'","'.$infos->current_state->battery_level.'","'.$infos->network->online.'", "'.$infos->current_state->hot_water.'")';
 	$result = $con->query($sql) or trigger_error('SQL: ' . $sql . ' Error: ' . $con->error, E_USER_ERROR);
 
 	//Set the humidity level if enabled.
